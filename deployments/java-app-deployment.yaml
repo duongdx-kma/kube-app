@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java-app-deployment
+  labels:
+    app: java-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      run: java-app-pod
+  template:
+    metadata:
+      labels:
+        run: java-app-pod
+    spec:
+      containers:
+        - name: java-app
+          image: duong1200798/vprofile_java_app
+          ports:
+            - name: java-app-port
+              containerPort: 8080
+      initContainers:
+        - name: init-mysql
+          image: busybox
+          command: ['sh', '-c', 'until nslookup java_db; do echo waiting for mysql; sleep 2; done;']
+
+        - name: init-memcached
+          image: busybox
+          command: [ 'sh', '-c', 'until nslookup java_memcached_01; do echo waiting for java_memcached_01; sleep 2; done;' ]

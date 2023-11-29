@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  # name must is the same https://github.com/duongdx-kma/vprofile-project/blob/containers/Docker-files/web/nginx.conf#L11C25-L11C25
+  name: java_app
+  labels:
+    app: java-app
+spec:
+  selector:
+    run: java-app-pod
+  type: LoadBalancer
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: java-app-port

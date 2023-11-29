@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  # must is the same: https://github.com/duongdx-kma/vprofile-project/blob/containers/src/main/resources/application.properties#L16C18-L16C34
+  name: java_rabbitmq_01
+  labels:
+    app: java-app
+spec:
+  selector:
+    run: rabbitmq-pod
+  type: ClusterIP
+  ports:
+    - port: 15672
+      protocol: TCP
+      targetPort: rabbitmq-port

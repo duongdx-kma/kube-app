@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java-db-deployment
+  labels:
+    app: java-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: java-db-pod
+  template:
+    metadata:
+      labels:
+        run: java-db-pod
+    spec:
+      containers:
+        - name: java-db
+          image: duong1200798/vprofile_java_db
+          ports:
+            - name: java-db-port
+              containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: mysql_root_password
+          volumeMounts:
+            - name: vprofile-db-data
+              mountPath: /var/lib/mysql
+      initContainers:
+        - name: busybox
+          image: busybox
+          volumeMounts:
+            - name: vprofile-db-data
+              mountPath: /var/lib/mysql
+          #args: ["rm", "-rf", "/var/lib/mysql/lost+found"]
+          command:
+            - 'sh'
+            - '-c'
+            - 'rm -rf /var/lib/mysql/lost+found'
+      # all our pods will be placed in ap-southeast-1a
+      nodeSelector:
+        zone: ap-southeast-1a
+      volumes:
+        - name: vprofile-db-data
+          # you must change  awsElasticBlockStore - tags KubernetesCluster = {cluster_name}
+          awsElasticBlockStore:
+            volumeID: id-111111111
+            fsType: ext4

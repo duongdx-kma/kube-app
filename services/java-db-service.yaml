@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  # name must is the same: https://github.com/duongdx-kma/vprofile-project/blob/containers/src/main/resources/application.properties#L3C23-L3C30
+  name: java_db
+  labels:
+    app: java-app
+spec:
+  selector:
+    run: java-db-pod
+  type: ClusterIP
+  ports:
+    - port: 3306
+      protocol: TCP
+      targetPort: java-db-port
