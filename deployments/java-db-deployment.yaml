@@ -26,6 +26,10 @@ spec:
                 secretKeyRef:
                   name: app-secret
                   key: mysql_root_password
+            - name: MYSQL_USER
+              value: duongdx
+            - name: MYSQL_PASSWORD
+              value: duongdx
           volumeMounts:
             - name: vprofile-db-data
               mountPath: /var/lib/mysql
@@ -35,17 +39,18 @@ spec:
           volumeMounts:
             - name: vprofile-db-data
               mountPath: /var/lib/mysql
-          #args: ["rm", "-rf", "/var/lib/mysql/lost+found"]
-          command:
-            - 'sh'
-            - '-c'
-            - 'rm -rf /var/lib/mysql/lost+found'
+          args: ["rm", "-rf", "/var/lib/mysql/lost+found"]
+#          command:
+#            - 'sh'
+#            - '-c'
+#            - 'rm -rf /var/lib/mysql/lost+found'
       # all our pods will be placed in ap-southeast-1a
-      nodeSelector:
-        zone: ap-southeast-1a
+      #nodeSelector:
+        #provider: aws
+        #zone: ap-southeast-1a
       volumes:
         - name: vprofile-db-data
           # you must change  awsElasticBlockStore - tags KubernetesCluster = {cluster_name}
           awsElasticBlockStore:
-            volumeID: id-111111111
+            volumeID: vol-0fa9e0a8a01fd3e46
             fsType: ext4

@@ -28,8 +28,13 @@
 --node-count=2 --node-size=t3.small --control-plane-size=t3.medium --dns-zone=duongdx.com \
 --node-volume-size=8 --control-plane-volume-size=8
 
+kops create cluster --name=duongdx.com --bastion=false \
+--state=s3://duongdx-kops-bucket --zones=ap-southeast-1a,ap-southeast-1b \
+--node-count=2 --node-size=t3.small --control-plane-size=t3.medium --dns-zone=duongdx.com \
+--node-volume-size=8 --control-plane-volume-size=8
+
 7. Create cluster:
-> kops update cluster --name=duongdx.com --state=s3://duongdx-kops-bucket --yes --admin
+> kops update cluster --name duongdx.com --state=s3://duongdx-kops-bucket --yes --admin
 
 8. Validate cluster:
 > kops validate cluster --name=duongdx.com --state=s3://duongdx-kops-bucket

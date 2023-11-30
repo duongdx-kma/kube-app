@@ -23,8 +23,8 @@ spec:
       initContainers:
         - name: init-mysql
           image: busybox
-          command: ['sh', '-c', 'until nslookup java_db; do echo waiting for mysql; sleep 2; done;']
+          command: ['sh', '-c', 'until nslookup java-db.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for mysql; sleep 2; done;']
 
         - name: init-memcached
           image: busybox
-          command: [ 'sh', '-c', 'until nslookup java_memcached_01; do echo waiting for java_memcached_01; sleep 2; done;' ]
+          command: ['sh', '-c', 'until nslookup java-memcached-01.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for memcached-01; sleep 2; done;' ]

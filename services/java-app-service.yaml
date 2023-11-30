@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   # name must is the same https://github.com/duongdx-kma/vprofile-project/blob/containers/Docker-files/web/nginx.conf#L11C25-L11C25
-  name: java_app
+  name: java-app
   labels:
     app: java-app
 spec:
