@@ -22,14 +22,9 @@
 --node-count=2 --node-size=t3.small --master-size=t3.medium --dns-zone=duongdx.com \
 --node-volume-size=8 --master-volume-size=8
 
-6. Create cluster-configuration: 1.26.4 
+6. Create cluster-configuration: > 1.26.4 
 > kops create cluster --name=duongdx.com --bastion=false \
---state=s3://duongdx-kops-bucket --zones=ap-southeast-1a,ap-southeast-1b \
---node-count=2 --node-size=t3.small --control-plane-size=t3.medium --dns-zone=duongdx.com \
---node-volume-size=8 --control-plane-volume-size=8
-
-kops create cluster --name=duongdx.com --bastion=false \
---state=s3://duongdx-kops-bucket --zones=ap-southeast-1a,ap-southeast-1b \
+--state=s3://duongdx-kops-bucket --zones=ap-southeast-1a \
 --node-count=2 --node-size=t3.small --control-plane-size=t3.medium --dns-zone=duongdx.com \
 --node-volume-size=8 --control-plane-volume-size=8
 
